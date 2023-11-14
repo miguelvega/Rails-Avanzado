@@ -62,4 +62,26 @@ Ejecutamos el comando rails console y comprobamos los resultados creando una nue
 
 ![19](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/45d3b1b9-63f4-4d13-9a4d-3b3cc3fe1e6f)
 
+Editamos el archivo movie.rb y comprobamos que el siguiente codigo ilustra cómo utilizar este mecanismo para “canonicalizar” (estandarizar el formato de) ciertos campos del modelo antes de guardar el modelo.
 
+``
+class Movie < ActiveRecord::Base
+    before_save :capitalize_title
+    def capitalize_title
+        self.title = self.title.split(/\s+/).map(&:downcase).map(&:capitalize).join(' ')
+    end
+end
+
+
+```
+Con lo cual el metodo `capitalize_title` se encargará de dividir las palabras en el título, convertirlas a minúsculas y luego capitalizar la primera letra de cada palabra antes de unirlas nuevamente. Ejecutamos el comando rails console y comprobamos los resultados creando una nueva instancia de la clase Movie con atributos específicos, incluyendo un título ('STAR wars'), una fecha de lanzamiento ('127-5-1977) y una clasificación ('PG'). Al escribir m.title en la consola deberiamos ver que el título se ha estandarizado y capitalizado como "Star Wars".
+
+![21](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/a15055a8-9fb3-44ea-94c9-709738121e07)
+
+ejecutamos bin/rails server y podemos apreciar qie se agrego un nuevo registro en la tabla de peliculas.
+
+```
+Star Wars 	PG 	1977-05-27 00:00:00 UTC 	More about Star Wars
+
+```
+ 
