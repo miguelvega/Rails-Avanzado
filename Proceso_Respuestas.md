@@ -22,7 +22,7 @@ Observamos el archivo schema.rb que contiene información sobre la estructura de
 
 ![9](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/9ee6796b-d53c-41cd-9d1d-e9c87f84942d)
 
-Ejecutamos el comando bin/rails server nuevamente y notamos un nuevo error, esta vez realizado a un error en la sintaxis en el archivo app/models/movie.rb, esto se puede apreciar en la siguiente imagen.
+Ejecutamos el comando bin/rails server nuevamente y notamos un nuevo error, esta vez relacionado a un error de sintaxis en el archivo app/models/movie.rb, esto se puede apreciar en la siguiente imagen.
 
 ![10](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/21d333b5-434f-46ed-a9fe-50ef806d38a2)
 
