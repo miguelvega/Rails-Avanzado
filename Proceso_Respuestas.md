@@ -35,4 +35,31 @@ Ejecutamos el comando bin/rails server y podemos ver la siguiente vista  a trave
 
 ![13](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/c0600d41-df01-4b6a-a22c-e09cddbe0297)
 
+Las validaciones en Rails son mecanismos que permiten asegurar que los datos almacenados en la base de datos cumplen con ciertos criterios antes de ser guardados.Si una validación falla, el objeto no se guardará y se agregarán errores al objeto para indicar qué validaciones fallaron y por qué. Estas validaciones ayudan a mantener la integridad, seguridad, experiencia del Usuario, mantenimiento de Reglas de Negocio y consistencia de los datos en la aplicación.
+
+Por ello, para estudiar este mecanismo editaremos el archivo `movie.rb` con el siguiente codigo:
+
+```
+class Movie < ActiveRecord::Base
+    def self.all_ratings ; %w[G PG PG-13 R NC-17] ; end #  shortcut: array of strings
+    validates :title, :presence => true
+    validates :release_date, :presence => true
+    validate :released_1930_or_later # uses custom validator below
+    validates :rating, :inclusion => {:in => Movie.all_ratings},
+        :unless => :grandfathered?
+    def released_1930_or_later
+        errors.add(:release_date, 'must be 1930 or later') if
+        release_date && release_date < Date.parse('1 Jan 1930')
+    end
+    @@grandfathered_date = Date.parse('1 Nov 1968')
+    def grandfathered?
+        release_date && release_date < @@grandfathered_date
+    end
+end
+
+```
+Ejecutamos el comando rails console y comprobamos los resultados creando una nueva instancia de la clase Movie con atributos específicos, incluyendo un título en blanco (''), una clasificación ('RG'), y una fecha de lanzamiento anterior a 1930 ('1929-01-01').
+
+![19](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/45d3b1b9-63f4-4d13-9a4d-3b3cc3fe1e6f)
+
 
