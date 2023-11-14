@@ -35,7 +35,7 @@ Ejecutamos el comando bin/rails server y podemos ver la siguiente vista  a trave
 
 ![13](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/c0600d41-df01-4b6a-a22c-e09cddbe0297)
 
-Las validaciones en Rails son mecanismos que permiten asegurar que los datos almacenados en la base de datos cumplen con ciertos criterios antes de ser guardados.Si una validación falla, el objeto no se guardará y se agregarán errores al objeto para indicar qué validaciones fallaron y por qué. Estas validaciones ayudan a mantener la integridad, seguridad, experiencia del Usuario, mantenimiento de Reglas de Negocio y consistencia de los datos en la aplicación.
+Las validaciones en Rails son mecanismos que permiten asegurar que los datos almacenados en la base de datos cumplen con ciertos criterios antes de ser guardados.Si una validación falla, el objeto no se guardará y se agregarán errores al objeto para indicar qué validaciones fallaron y por qué. Estas validaciones ayudan a mantener la integridad, seguridad, la experiencia del usuario, el mantenimiento de las reglas de negocio y la consistencia de los datos en la aplicación.
 
 Por ello, para estudiar este mecanismo editaremos el archivo `movie.rb` con el siguiente codigo:
 
