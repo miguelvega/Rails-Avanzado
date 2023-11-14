@@ -31,7 +31,7 @@ Lo solucionamos editando el archivo movie.rb, quedandonos de la siguiente manera
 ![11](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/9077b67d-c2c6-4d13-9b64-cbd5acc81adc)
 
 
-Ejecutamos el comando bin/rails server y podemos ver la siguiente vista  a traves de un navegador web, esta vista lo maneja los archivos index.html.haml (representa la vista de la lista de todas las películas), new.html.haml (se utiliza para mostrar el formulario de creación de una nueva película), show.html.haml (.muestra los detalles de una película específica).
+Ejecutamos el comando bin/rails server y podemos ver la siguiente vista  a traves de un navegador web, esta vista lo maneja los archivos index.html.haml (representa la vista de la lista de todas las películas), new.html.haml (se utiliza para mostrar el formulario de creación de una nueva película), show.html.haml (.muestra los detalles de una película específica). Estas vistas son componentes esenciales para la interacción del usuario con la aplicación.
 
 ![13](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/c0600d41-df01-4b6a-a22c-e09cddbe0297)
 
