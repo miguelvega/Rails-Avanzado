@@ -270,4 +270,23 @@ SELECT movies .*
     WHERE moviegoers.id = 1;
 ```
 
-La consulta selecciona y devuelve todas las columnas de la tabla movies para aquellas películas que tienen revisiones asociadas realizadas por un moviegoer específico con un id igual a 1. En esta consulta el campo moviegoer_id de la tabla reviews sirve como puente de enlace entre las tablas movies y la tabla moviegoer para poder realizar esta consulta.
+La consulta selecciona y devuelve todas las columnas de la tabla movies para aquellas películas que tienen revisiones asociadas realizadas por un moviegoer específico con un id igual a 1. En esta consulta el campo moviegoer_id de la tabla reviews sirve como puente de enlace entre las tablas movies y la tabla moviegoer para poder realizar esta consulta. Con lo cual si hay dos tablas que no se conectan pero deseas hacer una consultas que involucren campos de dichas tablas, entonces una solucion seria usar una tabla intermediaria de tal modo que tenga campos que se relacionen con dichas tablas. 
+
+
+Se ha  añadido `has_many :reviews` a la clase `Movie`.  El método `has_many` utiliza la metaprogramación para definir el nuevo método de `instancia reviews=` que usamos en el código siguiente.     
+
+```
+# it would be nice if we could do this:
+inception = Movie.where(:title => 'Inception')
+alice,bob = Moviegoer.find(alice_id, bob_id)
+# alice likes Inception, bob less so
+alice_review = Review.new(:potatoes => 5)
+bob_review   = Review.new(:potatoes => 3)
+# a movie has many reviews:
+inception.reviews = [alice_review, bob_review]
+# a moviegoer has many reviews:
+alice.reviews << alice_review
+bob.reviews << bob_review
+# can we find out who wrote each review?
+inception.reviews.map { |r| r.moviegoer.name } # => ['alice','bob']
+```
