@@ -93,16 +93,38 @@ para crear la tabla moviegoeres e incorporarla al archivo y darle la version al 
 
  ![32](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/d1b51a99-3469-4dc3-a73c-7d39fe963ecb)
 
-Sin embargo, la base de datos actual esta vacia debido a que no hemos incorporado las semillas dadas en el archivo seeds.rb, luego ejecutamos bin-rails server y tenemos lo siguiente en nuestro navegador.
+Sin embargo, la base de datos actual esta vacia debido a que no hemos incorporado las semillas dadas en el archivo seeds.rb.
+
+![31](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/01f8ef61-7af2-4782-8473-a382da8cb60a)
+
+Escribimos `rails db:seed` en la terminal y luego ejecutamos bin-rails server
 
 ![35](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/f5702fc3-46ae-48c4-a758-3a56968fce25)
 
 
-Luego, editamos el archivo app/models/moviegoer.rb (se puede apreciar en este repositorio), ademas Se puede autenticar al usuario a través de un tercero. Usar la excelente gema OmniAuth que proporciona una API uniforme para muchos proveedores de SSO diferentes. Para ello, agregamos en nuestro archivo Gemfile las gemas 'omniauth' y 
-'omniauth-twitter', ejecutamos bundle install para incoporarlas en nustra app localmente.
+Luego, editamos el archivo app/models/moviegoer.rb (se puede apreciar el codigo en este repositorio), ademas se puede autenticar al usuario a través de un tercero. Usaremos la excelente gema OmniAuth que proporciona una API uniforme para muchos proveedores de SSO diferentes. Para ello, agregamos en nuestro archivo Gemfile las siguiente gemas:
 
-Escribimos el siguiente muestra los cambios necesarios en sus rutas, controladores y vistas para usar OmniAuth, de la misma manera se puede apreciar esta configuracion en este repositorio 
+```
+gem 'omniauth'
+gem 'omniauth-twitter'
 
+```
+Ejecutamos bundle install para incoporarlas en nuestra aplicacion localmente.
+
+
+Ahora bien, la mayoría de los proveedores de autenticación requieren que registremos cualquier aplicación que utilizará su sitio para la autenticación, por lo que en este ejemplo necesitaremos crear una cuenta de desarrollador de Twitter.
+
+![36](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/220ce362-a94e-489c-b026-49e4fbdde58e)
+
+Insertamos en el siguiente codigo nuestra API key y API key secret que obtuvimos al registrar tu aplicación en Twitter.
+```
+# Replace API_KEY and API_SECRET with the values you got from Twitter
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :twitter, "API_KEY", "API_SECRET"
+end
+```
+
+Agregamos el siguiente codigo en el archivo `config/routes.rb`que nos ayuda a agregar las rutas necesarias para manejar la autenticación:
 ```
 #routes.rb
 get  'auth/:provider/callback' => 'sessions#create'
@@ -110,7 +132,7 @@ get  'auth/failure' => 'sessions#failure'
 get  'auth/twitter', :as => 'login'
 post 'logout' => 'sessions#destroy'
 ```
-
+Por ultimo, creamos un controlador de sesiones (sessions_controller.rb), el cual contiene las acciones esenciales para gestionar la autenticación.
 ```
 class SessionsController < ApplicationController
   # login & logout actions should not require user to be logged in
@@ -130,16 +152,7 @@ class SessionsController < ApplicationController
   end
 end
 ```
-Para poder emplear el siguiente codigo, tuvimos que crearnos una cuenta en twitter y dirigirnos a Twitter Developer y crearnos una nueva aplicación para obtener lnuestra API key y  Api key secret.
 
-![36](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/220ce362-a94e-489c-b026-49e4fbdde58e)
-
-```
-# Replace API_KEY and API_SECRET with the values you got from Twitter
-Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :twitter, "API_KEY", "API_SECRET"
-end
-```
 
 ### Pregunta: Debes tener cuidado para evitar crear una vulnerabilidad de seguridad. ¿Qué sucede si un atacante malintencionado crea un envío de formulario que intenta modificar params[:moviegoer][:uid] o params[:moviegoer][:provider] (campos que solo deben modificarse mediante la lógica de autenticación) publicando campos de formulario ocultos denominados params[moviegoer][uid] y así sucesivamente?.
 
