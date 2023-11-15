@@ -3287,3 +3287,100 @@ Processing by MoviesController#index as HTML
 Completed 200 OK in 6ms (Views: 4.9ms | ActiveRecord: 0.1ms | Allocations: 3673)
 
 
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."title" = ?[0m  [["title", "Inception"]]
+Started GET "/" for 127.0.0.1 at 2023-11-15 04:43:52 -0500
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/movies" for 127.0.0.1 at 2023-11-15 04:43:52 -0500
+Processing by MoviesController#index as HTML
+  Rendering layout layouts/application.html.haml
+  Rendering movies/index.html.haml within layouts/application
+  [1m[36mMovie Load (0.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/views/movies/index.html.haml:15
+  Rendered movies/index.html.haml within layouts/application (Duration: 45.8ms | Allocations: 31008)
+  Rendered layout layouts/application.html.haml (Duration: 83.3ms | Allocations: 58509)
+Completed 200 OK in 100ms (Views: 85.2ms | ActiveRecord: 1.0ms | Allocations: 70737)
+
+
+Started GET "/movies/1" for 127.0.0.1 at 2023-11-15 04:43:55 -0500
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/movies_controller.rb:7:in `show'
+  Rendering layout layouts/application.html.haml
+  Rendering movies/show.html.haml within layouts/application
+  Rendered movies/show.html.haml within layouts/application (Duration: 5.7ms | Allocations: 5014)
+  Rendered layout layouts/application.html.haml (Duration: 9.5ms | Allocations: 7500)
+Completed 200 OK in 12ms (Views: 9.9ms | ActiveRecord: 0.1ms | Allocations: 10039)
+
+
+Started GET "/movies" for 127.0.0.1 at 2023-11-15 04:43:58 -0500
+Processing by MoviesController#index as HTML
+  Rendering layout layouts/application.html.haml
+  Rendering movies/index.html.haml within layouts/application
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/views/movies/index.html.haml:15
+  Rendered movies/index.html.haml within layouts/application (Duration: 1.6ms | Allocations: 816)
+  Rendered layout layouts/application.html.haml (Duration: 3.7ms | Allocations: 3309)
+Completed 200 OK in 5ms (Views: 4.0ms | ActiveRecord: 0.1ms | Allocations: 3691)
+
+
+Started GET "/movies/4" for 127.0.0.1 at 2023-11-15 04:44:04 -0500
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/movies_controller.rb:7:in `show'
+  Rendering layout layouts/application.html.haml
+  Rendering movies/show.html.haml within layouts/application
+  Rendered movies/show.html.haml within layouts/application (Duration: 0.6ms | Allocations: 107)
+  Rendered layout layouts/application.html.haml (Duration: 3.4ms | Allocations: 2592)
+Completed 200 OK in 6ms (Views: 4.0ms | ActiveRecord: 0.1ms | Allocations: 3412)
+
+
+  [1m[36mMoviegoer Load (0.2ms)[0m  [1m[34mSELECT "moviegoers".* FROM "moviegoers" WHERE "moviegoers"."name" = ? LIMIT ?[0m  [["name", "Alice"], ["LIMIT", 1]]
+  [1m[36mMoviegoer Load (0.1ms)[0m  [1m[34mSELECT "moviegoers".* FROM "moviegoers" WHERE "moviegoers"."name" = ? LIMIT ?[0m  [["name", "Bob"], ["LIMIT", 1]]
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."title" = ? LIMIT ?[0m  [["title", "Inception"], ["LIMIT", 1]]
+  [1m[36mMoviegoer Load (0.1ms)[0m  [1m[34mSELECT "moviegoers".* FROM "moviegoers" WHERE "moviegoers"."name" = ? LIMIT ?[0m  [["name", "Alice"], ["LIMIT", 1]]
+  [1m[36mMoviegoer Load (0.0ms)[0m  [1m[34mSELECT "moviegoers".* FROM "moviegoers" WHERE "moviegoers"."name" = ? LIMIT ?[0m  [["name", "Bob"], ["LIMIT", 1]]
+Started GET "/" for 127.0.0.1 at 2023-11-15 04:47:31 -0500
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/movies" for 127.0.0.1 at 2023-11-15 04:47:31 -0500
+Processing by MoviesController#index as HTML
+  Rendering layout layouts/application.html.haml
+  Rendering movies/index.html.haml within layouts/application
+  [1m[36mMovie Load (0.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/views/movies/index.html.haml:15
+  Rendered movies/index.html.haml within layouts/application (Duration: 42.0ms | Allocations: 31008)
+  Rendered layout layouts/application.html.haml (Duration: 86.7ms | Allocations: 58666)
+Completed 200 OK in 105ms (Views: 89.4ms | ActiveRecord: 0.9ms | Allocations: 70894)
+
+
+Started GET "/movies" for 127.0.0.1 at 2023-11-15 04:47:33 -0500
+Processing by MoviesController#index as HTML
+  Rendering layout layouts/application.html.haml
+  Rendering movies/index.html.haml within layouts/application
+  [1m[36mMovie Load (0.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/views/movies/index.html.haml:15
+  Rendered movies/index.html.haml within layouts/application (Duration: 2.7ms | Allocations: 873)
+  Rendered layout layouts/application.html.haml (Duration: 6.6ms | Allocations: 3367)
+Completed 200 OK in 8ms (Views: 7.0ms | ActiveRecord: 0.2ms | Allocations: 3815)
+
+
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."title" = ? ORDER BY "movies"."id" ASC LIMIT ?[0m  [["title", "Inception"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mMovie Create (0.2ms)[0m  [1m[32mINSERT INTO "movies" ("title", "rating", "description", "release_date", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["title", "Inception"], ["rating", nil], ["description", nil], ["release_date", nil], ["created_at", "2023-11-15 09:48:15.872319"], ["updated_at", "2023-11-15 09:48:15.872319"]]
+  [1m[36mTRANSACTION (6.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMoviegoer Load (0.2ms)[0m  [1m[34mSELECT "moviegoers".* FROM "moviegoers" WHERE "moviegoers"."name" = ? LIMIT ?[0m  [["name", "Alice"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mMoviegoer Create (0.2ms)[0m  [1m[32mINSERT INTO "moviegoers" ("name", "provider", "uid", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Alice"], ["provider", nil], ["uid", nil], ["created_at", "2023-11-15 09:49:49.721836"], ["updated_at", "2023-11-15 09:49:49.721836"]]
+  [1m[36mTRANSACTION (7.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mMoviegoer Load (0.2ms)[0m  [1m[34mSELECT "moviegoers".* FROM "moviegoers" WHERE "moviegoers"."name" = ? LIMIT ?[0m  [["name", "Bob"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mMoviegoer Create (0.4ms)[0m  [1m[32mINSERT INTO "moviegoers" ("name", "provider", "uid", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Bob"], ["provider", nil], ["uid", nil], ["created_at", "2023-11-15 09:50:01.504800"], ["updated_at", "2023-11-15 09:50:01.504800"]]
+  [1m[36mTRANSACTION (6.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."movie_id" = ?[0m  [["movie_id", 5]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mReview Create (0.2ms)[0m  [1m[32mINSERT INTO "reviews" ("potatoes", "comments", "moviegoer_id", "movie_id") VALUES (?, ?, ?, ?)[0m  [["potatoes", 5], ["comments", nil], ["moviegoer_id", 1], ["movie_id", 5]]
+  [1m[36mReview Create (0.1ms)[0m  [1m[32mINSERT INTO "reviews" ("potatoes", "comments", "moviegoer_id", "movie_id") VALUES (?, ?, ?, ?)[0m  [["potatoes", 3], ["comments", nil], ["moviegoer_id", 2], ["movie_id", 5]]
+  [1m[36mTRANSACTION (6.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."moviegoer_id" = ?[0m  [["moviegoer_id", 1]]
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."moviegoer_id" = ?[0m  [["moviegoer_id", 2]]
