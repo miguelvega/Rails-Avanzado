@@ -3384,3 +3384,131 @@ Completed 200 OK in 8ms (Views: 7.0ms | ActiveRecord: 0.2ms | Allocations: 3815)
   [1m[36mTRANSACTION (6.6ms)[0m  [1m[36mcommit transaction[0m
   [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."moviegoer_id" = ?[0m  [["moviegoer_id", 1]]
   [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."moviegoer_id" = ?[0m  [["moviegoer_id", 2]]
+Started GET "/" for 127.0.0.1 at 2023-11-15 05:15:44 -0500
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/movies" for 127.0.0.1 at 2023-11-15 05:15:44 -0500
+Processing by MoviesController#index as HTML
+  Rendering layout layouts/application.html.haml
+  Rendering movies/index.html.haml within layouts/application
+  [1m[36mMovie Load (0.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/views/movies/index.html.haml:15
+  Rendered movies/index.html.haml within layouts/application (Duration: 50.7ms | Allocations: 31054)
+  Rendered layout layouts/application.html.haml (Duration: 97.5ms | Allocations: 58731)
+Completed 200 OK in 122ms (Views: 100.6ms | ActiveRecord: 0.8ms | Allocations: 70959)
+
+
+Started GET "/movies/5" for 127.0.0.1 at 2023-11-15 05:16:00 -0500
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/movies_controller.rb:7:in `show'
+  Rendering layout layouts/application.html.haml
+  Rendering movies/show.html.haml within layouts/application
+  Rendered movies/show.html.haml within layouts/application (Duration: 8.1ms | Allocations: 7007)
+  Rendered layout layouts/application.html.haml (Duration: 8.4ms | Allocations: 7093)
+Completed 500 Internal Server Error in 11ms (ActiveRecord: 0.1ms | Allocations: 9626)
+
+
+  
+ActionView::Template::Error (undefined method `strftime' for nil:NilClass):
+     8:     = @movie.rating
+     9:   %li
+    10:     Released on:
+    11:     = @movie.release_date.strftime("%B %d, %Y")
+    12: 
+    13: %h3 Description:
+    14: = link_to 'Edit info', edit_movie_path(@movie)
+  
+app/views/movies/show.html.haml:11
+Started GET "/movies/5" for 127.0.0.1 at 2023-11-15 05:16:03 -0500
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mMovie Load (0.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/movies_controller.rb:7:in `show'
+  Rendering layout layouts/application.html.haml
+  Rendering movies/show.html.haml within layouts/application
+  Rendered movies/show.html.haml within layouts/application (Duration: 2.2ms | Allocations: 1416)
+  Rendered layout layouts/application.html.haml (Duration: 2.5ms | Allocations: 1488)
+Completed 500 Internal Server Error in 6ms (ActiveRecord: 0.2ms | Allocations: 2392)
+
+
+  
+ActionView::Template::Error (undefined method `strftime' for nil:NilClass):
+     8:     = @movie.rating
+     9:   %li
+    10:     Released on:
+    11:     = @movie.release_date.strftime("%B %d, %Y")
+    12: 
+    13: %h3 Description:
+    14: = link_to 'Edit info', edit_movie_path(@movie)
+  
+app/views/movies/show.html.haml:11
+Started GET "/" for 127.0.0.1 at 2023-11-15 05:16:18 -0500
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/movies" for 127.0.0.1 at 2023-11-15 05:16:18 -0500
+Processing by MoviesController#index as HTML
+  Rendering layout layouts/application.html.haml
+  Rendering movies/index.html.haml within layouts/application
+  [1m[36mMovie Load (0.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  ↳ app/views/movies/index.html.haml:15
+  Rendered movies/index.html.haml within layouts/application (Duration: 28.0ms | Allocations: 31052)
+  Rendered layout layouts/application.html.haml (Duration: 77.5ms | Allocations: 58063)
+Completed 200 OK in 97ms (Views: 79.7ms | ActiveRecord: 1.1ms | Allocations: 70293)
+
+
+Started GET "/movies/1" for 127.0.0.1 at 2023-11-15 05:16:20 -0500
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mMovie Load (0.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/movies_controller.rb:7:in `show'
+  Rendering layout layouts/application.html.haml
+  Rendering movies/show.html.haml within layouts/application
+  Rendered movies/show.html.haml within layouts/application (Duration: 8.0ms | Allocations: 5012)
+  Rendered layout layouts/application.html.haml (Duration: 11.0ms | Allocations: 7498)
+Completed 200 OK in 15ms (Views: 11.6ms | ActiveRecord: 0.2ms | Allocations: 10037)
+
+
+Started GET "/movies/4" for 127.0.0.1 at 2023-11-15 05:16:23 -0500
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mMovie Load (0.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/movies_controller.rb:7:in `show'
+  Rendering layout layouts/application.html.haml
+  Rendering movies/show.html.haml within layouts/application
+  Rendered movies/show.html.haml within layouts/application (Duration: 0.4ms | Allocations: 107)
+  Rendered layout layouts/application.html.haml (Duration: 4.5ms | Allocations: 2592)
+Completed 200 OK in 8ms (Views: 5.2ms | ActiveRecord: 0.2ms | Allocations: 3412)
+
+
+Started GET "/movies/5" for 127.0.0.1 at 2023-11-15 05:16:27 -0500
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mMovie Load (0.1ms)[0m  [1m[34mSELECT "movies".* FROM "movies" WHERE "movies"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/movies_controller.rb:7:in `show'
+  Rendering layout layouts/application.html.haml
+  Rendering movies/show.html.haml within layouts/application
+  Rendered movies/show.html.haml within layouts/application (Duration: 2.3ms | Allocations: 2243)
+  Rendered layout layouts/application.html.haml (Duration: 2.4ms | Allocations: 2328)
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.1ms | Allocations: 3143)
+
+
+  
+ActionView::Template::Error (undefined method `strftime' for nil:NilClass):
+     8:     = @movie.rating
+     9:   %li
+    10:     Released on:
+    11:     = @movie.release_date.strftime("%B %d, %Y")
+    12: 
+    13: %h3 Description:
+    14: = link_to 'Edit info', edit_movie_path(@movie)
+  
+app/views/movies/show.html.haml:11
+Started GET "/movies/new" for 127.0.0.1 at 2023-11-15 05:16:42 -0500
+Processing by MoviesController#new as HTML
+  Rendering layout layouts/application.html.haml
+  Rendering movies/new.html.haml within layouts/application
+  Rendered movies/new.html.haml within layouts/application (Duration: 11.9ms | Allocations: 9086)
+  Rendered layout layouts/application.html.haml (Duration: 15.1ms | Allocations: 11717)
+Completed 200 OK in 16ms (Views: 15.6ms | ActiveRecord: 0.0ms | Allocations: 12260)
+
+
