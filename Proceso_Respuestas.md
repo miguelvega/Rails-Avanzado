@@ -98,7 +98,49 @@ Sin embargo, la base de datos actual esta vacia debido a que no hemos incorporad
 ![35](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/f5702fc3-46ae-48c4-a758-3a56968fce25)
 
 
- 
+Luego, editamos el archivo app/models/moviegoer.rb (se puede apreciar en este repositorio), ademas Se puede autenticar al usuario a través de un tercero. Usar la excelente gema OmniAuth que proporciona una API uniforme para muchos proveedores de SSO diferentes. Para ello, agregamos en nuestro archivo Gemfile las gemas 'omniauth' y 
+'omniauth-twitter', ejecutamos bundle install para incoporarlas en nustra app localmente.
+
+Escribimos el siguiente muestra los cambios necesarios en sus rutas, controladores y vistas para usar OmniAuth, de la misma manera se puede apreciar esta configuracion en este repositorio 
+
+```
+#routes.rb
+get  'auth/:provider/callback' => 'sessions#create'
+get  'auth/failure' => 'sessions#failure'
+get  'auth/twitter', :as => 'login'
+post 'logout' => 'sessions#destroy'
+```
+
+```
+class SessionsController < ApplicationController
+  # login & logout actions should not require user to be logged in
+  skip_before_filter :set_current_user  # check you version
+  def create
+    auth = request.env["omniauth.auth"]
+    user =
+      Moviegoer.where(provider: auth["provider"], uid: auth["uid"]) ||
+      Moviegoer.create_with_omniauth(auth)
+    session[:user_id] = user.id
+    redirect_to movies_path
+  end
+  def destroy
+    session.delete(:user_id)
+    flash[:notice] = 'Logged out successfully.'
+    redirect_to movies_path
+  end
+end
+```
+Para poder emplear el siguiente codigo, tuvimos que crearnos una cuenta en twitter y dirigirnos a Twitter Developer y crearnos una nueva aplicación para obtener lnuestra API key y  Api key secret.
+
+![36](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/220ce362-a94e-489c-b026-49e4fbdde58e)
+
+```
+# Replace API_KEY and API_SECRET with the values you got from Twitter
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :twitter, "API_KEY", "API_SECRET"
+end
+```
+
 
  
 
