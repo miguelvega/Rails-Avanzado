@@ -62,6 +62,50 @@ Ejecutamos el comando rails console y comprobamos los resultados creando una nue
 
 ![19](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/45d3b1b9-63f4-4d13-9a4d-3b3cc3fe1e6f)
 
+
+Explica el código siguiente :
+
+```
+class MoviesController < ApplicationController
+  def new
+    @movie = Movie.new
+  end 
+  def create
+    if (@movie = Movie.create(movie_params))
+      redirect_to movies_path, :notice => "#{@movie.title} created."
+    else
+      flash[:alert] = "Movie #{@movie.title} could not be created: " +
+        @movie.errors.full_messages.join(",")
+      render 'new'
+    end
+  end
+  def edit
+    @movie = Movie.find params[:id]
+  end
+  def update
+    @movie = Movie.find params[:id]
+    if (@movie.update_attributes(movie_params))
+      redirect_to movie_path(@movie), :notice => "#{@movie.title} updated."
+    else
+      flash[:alert] = "#{@movie.title} could not be updated: " +
+        @movie.errors.full_messages.join(",")
+      render 'edit'
+    end
+  end
+  def destroy
+    @movie = Movie.find(params[:id])
+    @movie.destroy
+    redirect_to movies_path, :notice => "#{@movie.title} deleted."
+  end
+  private
+  def movie_params
+    params.require(:movie)
+    params[:movie].permit(:title,:rating,:release_date)
+  end
+end
+```
+ Este controlador sigue las convenciones de Rails y proporciona las acciones necesarias para realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en el modelo de películas.
+
 Editamos el archivo movie.rb y comprobamos que el siguiente codigo ilustra cómo utilizar este mecanismo para “canonicalizar” (estandarizar el formato de) ciertos campos del modelo antes de guardar el modelo.
 
 ```
@@ -83,26 +127,70 @@ Ejecutamos bin/rails server y podemos apreciar qie se agrego un nuevo registro e
 Star Wars 	PG 	1977-05-27 00:00:00 UTC 	More about Star Wars
 
 ```
- Al continuar con la realizacion  de la actividad tenemos las siguiente instruccion `rails generate model Moviegoer name:string provider:string uid:string`, sin embargo hay un conflicto(debido al nombre 'Moviegoer' que ya se utiliza en nuestra aplicación) con el archivo  db/migrate/20231114214700_create_moviegoers.rb realizada anteriormente, por ello realice el comando `rails generate model Moviegoer name:string provider:string uid:string --skip-collision-check --force`, con lo cual eliminamos el archivo de migración anterior, es decir 20231113195135_create_moviegoers.rb, creamos un nuevo archivo de migración db/migrate/20231114214754_create_moviegoers.rb y sobrescribimos el archivo del modelo Moviegoer. Para evitar futuros errores o conflictos, elimine la base de datos  y la cree nuevamente.
+
+## SSO y autenticación a través de terceros
+
+Una manera de ser más DRY y productivo es evitar implementar funcionalidad que se puede reutilizar a partir de otros servicios. Un ejemplo muy actual de esto es la autenticación.
+
+Afortunadamente, añadir autenticación en las aplicaciones Rails a través de terceros es algo directo. Por supuesto, antes de que permitamos iniciar sesión a un usuario, ¡necesitamos poder representar usuarios! Así que antes de continuar, vamos a crear un modelo y una migración básicos siguiendo las instrucciones.
+
+ Al continuar con la realizacion  de la actividad tenemos las siguiente instruccion `rails generate model Moviegoer name:string provider:string uid:string`, sin embargo hay un conflicto(debido al nombre 'Moviegoer' que ya se utiliza en nuestra aplicación) con el archivo  `db/migrate/20231114214700_create_moviegoers.rb` realizada anteriormente, por ello realicè el comando `rails generate model Moviegoer name:string provider:string uid:string --skip-collision-check --force`, con lo cual eliminamos el archivo de migración anterior, es decir `20231113195135_create_moviegoers.rb`, creamos un nuevo archivo de migración `db/migrate/20231114214754_create_moviegoers.rb` y sobrescribimos el archivo del modelo Moviegoer. Para evitar futuros errores o conflictos, elimine la base de datos  y la cree nuevamente.
 
 ![28](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/57e85776-c0eb-461b-9e9a-76855d3950d4)
 
-Editamos el archivo schema.rb donde se almacena la estructura actual de la base de datos para que se encuentra con la version 2023_10_03_234846, es decir, previo a la clonacion del repositoio, luego ejecutamos el comando rails db:migrate
-para crear la tabla moviegoeres e incorporarla al archivo y darle la version al schema de esta ultima migracion como se puede apreciar en su marca de tiempo dada en la siguiente imagen.
+Editamos el archivo schema.rb donde se almacena la estructura actual de la base de datos para que se encuentra con la version `2023_10_03_234846`, es decir, previo a la clonacion del repositoio, luego ejecutamos el comando `rails db:migrate` para crear la tabla moviegoeres e incorporarla al archivo y darle la version al schema de esta ultima migracion como se puede apreciar en su marca de tiempo dada en la siguiente imagen.
 
 
  ![32](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/d1b51a99-3469-4dc3-a73c-7d39fe963ecb)
 
-Sin embargo, la base de datos actual esta vacia debido a que no hemos incorporado las semillas dadas en el archivo seeds.rb, luego ejecutamos bin-rails server y tenemos lo siguiente en nuestro navegador.
+Sin embargo, la base de datos actual esta vacia debido a que no hemos incorporado las semillas dadas en el archivo seeds.rb.
+
+![31](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/01f8ef61-7af2-4782-8473-a382da8cb60a)
+
+Escribimos `rails db:seed` en la terminal y luego ejecutamos `bin/rails server`
 
 ![35](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/f5702fc3-46ae-48c4-a758-3a56968fce25)
 
 
-Luego, editamos el archivo app/models/moviegoer.rb (se puede apreciar en este repositorio), ademas Se puede autenticar al usuario a través de un tercero. Usar la excelente gema OmniAuth que proporciona una API uniforme para muchos proveedores de SSO diferentes. Para ello, agregamos en nuestro archivo Gemfile las gemas 'omniauth' y 
-'omniauth-twitter', ejecutamos bundle install para incoporarlas en nustra app localmente.
+Luego, editamos el archivo `app/models/moviegoer.rb`
+```
+# Edit app/models/moviegoer.rb to look like this:
+class Moviegoer < ActiveRecord::Base
+    def self.create_with_omniauth(auth)
+        Moviegoer.create!(
+        :provider => auth["provider"],
+        :uid => auth["uid"],
+        :name => auth["info"]["name"])
+    end
+end
 
-Escribimos el siguiente muestra los cambios necesarios en sus rutas, controladores y vistas para usar OmniAuth, de la misma manera se puede apreciar esta configuracion en este repositorio 
+```
+Este archivo define una clase llamada Moviegoer que hereda de ActiveRecord::Base, lo que implica que se espera que interactúe con una base de datos a través de ActiveRecord. La función principal de este archivo es proporcionar un método llamado self.create_with_omniauth(auth) que se encarga de crear un nuevo registro de Moviegoer utilizando la información de autenticación (auth) proporcionada. Esta función está diseñada para ser utilizada en el contexto de autenticación mediante OmniAuth.
 
+
+Ademas, se puede autenticar al usuario a través de un tercero. Usaremos la excelente gema OmniAuth que proporciona una API uniforme para muchos proveedores de SSO diferentes. Para ello, agregamos en nuestro archivo Gemfile las siguiente gemas:
+
+```
+gem 'omniauth'
+gem 'omniauth-twitter'
+
+```
+Ejecutamos bundle install para incoporarlas en nuestra aplicacion localmente.
+
+
+Ahora bien, la mayoría de los proveedores de autenticación requieren que registremos cualquier aplicación que utilizará su sitio para la autenticación, por lo que en este ejemplo necesitaremos crear una cuenta de desarrollador de Twitter.
+
+![36](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/220ce362-a94e-489c-b026-49e4fbdde58e)
+
+Insertamos en el siguiente codigo nuestra API key y API key secret que obtuvimos al registrar tu aplicación en Twitter.
+```
+# Replace API_KEY and API_SECRET with the values you got from Twitter
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :twitter, "API_KEY", "API_SECRET"
+end
+```
+
+Agregamos el siguiente codigo en el archivo `config/routes.rb`que nos ayuda a agregar las rutas necesarias para manejar la autenticación:
 ```
 #routes.rb
 get  'auth/:provider/callback' => 'sessions#create'
@@ -110,7 +198,7 @@ get  'auth/failure' => 'sessions#failure'
 get  'auth/twitter', :as => 'login'
 post 'logout' => 'sessions#destroy'
 ```
-
+Por ultimo, creamos un controlador de sesiones (sessions_controller.rb), el cual contiene las acciones esenciales para gestionar la autenticación.
 ```
 class SessionsController < ApplicationController
   # login & logout actions should not require user to be logged in
@@ -130,21 +218,25 @@ class SessionsController < ApplicationController
   end
 end
 ```
-Para poder emplear el siguiente codigo, tuvimos que crearnos una cuenta en twitter y dirigirnos a Twitter Developer y crearnos una nueva aplicación para obtener lnuestra API key y  Api key secret.
 
-![36](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/220ce362-a94e-489c-b026-49e4fbdde58e)
-
-```
-# Replace API_KEY and API_SECRET with the values you got from Twitter
-Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :twitter, "API_KEY", "API_SECRET"
-end
-```
 
 ### Pregunta: Debes tener cuidado para evitar crear una vulnerabilidad de seguridad. ¿Qué sucede si un atacante malintencionado crea un envío de formulario que intenta modificar params[:moviegoer][:uid] o params[:moviegoer][:provider] (campos que solo deben modificarse mediante la lógica de autenticación) publicando campos de formulario ocultos denominados params[moviegoer][uid] y así sucesivamente?.
 
  
-
+Si el atacante malintencionado logra crear un envío de formulario que intenta modificar params[:moviegoer][:uid] o params[:moviegoer][:provider] mediante la inclusión de campos ocultos como params[moviegoer][uid] y similares, podría potencialmente comprometer la seguridad de la aplicación, podría llevar a realizar cambios no autorizados en la información del usuario autenticado, lo cual resulta en el robo de identidad o en la alteración inapropiada de los datos del usuario.
  
 
 
+## Asociaciones y claves foráneas
+
+Una asociación es una relación lógica entre dos tipos de entidades de una arquitectura software. Por ejemplo, podemos añadir a RottenPotatoes las clases Review (crítica) y Moviegoer (espectador o usuario) para permitir que los usuarios escriban críticas sobre sus películas favoritas; podríamos hacer esto añadiendo una asociación de uno a muchos (one-to-many) entre las críticas y las películas (cada crítica es acerca de una película) y entre críticas y usuarios (cada crítica está escrita por exactamente un usuario).
+
+
+Explica la siguientes líneas de SQL:
+
+```
+SELECT reviews.*
+    FROM movies JOIN reviews ON movies.id=reviews.movie_id
+    WHERE movies.id = 41;
+``` 
+La consulta SQL selecciona todas las columnas de la tabla "reviews" que están asociadas a la película con un id igual a 41 en la tabla "movies".
