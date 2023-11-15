@@ -70,3 +70,11 @@ end
   group :development, :test do
     gem 'byebug'
 end
+
+# Gemfile
+
+# ... otras gemas ...
+
+gem 'omniauth'
+gem 'omniauth-twitter'
+
