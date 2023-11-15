@@ -62,6 +62,50 @@ Ejecutamos el comando rails console y comprobamos los resultados creando una nue
 
 ![19](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/45d3b1b9-63f4-4d13-9a4d-3b3cc3fe1e6f)
 
+
+Explica el código siguiente :
+
+```
+class MoviesController < ApplicationController
+  def new
+    @movie = Movie.new
+  end 
+  def create
+    if (@movie = Movie.create(movie_params))
+      redirect_to movies_path, :notice => "#{@movie.title} created."
+    else
+      flash[:alert] = "Movie #{@movie.title} could not be created: " +
+        @movie.errors.full_messages.join(",")
+      render 'new'
+    end
+  end
+  def edit
+    @movie = Movie.find params[:id]
+  end
+  def update
+    @movie = Movie.find params[:id]
+    if (@movie.update_attributes(movie_params))
+      redirect_to movie_path(@movie), :notice => "#{@movie.title} updated."
+    else
+      flash[:alert] = "#{@movie.title} could not be updated: " +
+        @movie.errors.full_messages.join(",")
+      render 'edit'
+    end
+  end
+  def destroy
+    @movie = Movie.find(params[:id])
+    @movie.destroy
+    redirect_to movies_path, :notice => "#{@movie.title} deleted."
+  end
+  private
+  def movie_params
+    params.require(:movie)
+    params[:movie].permit(:title,:rating,:release_date)
+  end
+end
+```
+ Este controlador sigue las convenciones de Rails y proporciona las acciones necesarias para realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en el modelo de películas.
+
 Editamos el archivo movie.rb y comprobamos que el siguiente codigo ilustra cómo utilizar este mecanismo para “canonicalizar” (estandarizar el formato de) ciertos campos del modelo antes de guardar el modelo.
 
 ```
@@ -157,7 +201,7 @@ end
 ### Pregunta: Debes tener cuidado para evitar crear una vulnerabilidad de seguridad. ¿Qué sucede si un atacante malintencionado crea un envío de formulario que intenta modificar params[:moviegoer][:uid] o params[:moviegoer][:provider] (campos que solo deben modificarse mediante la lógica de autenticación) publicando campos de formulario ocultos denominados params[moviegoer][uid] y así sucesivamente?.
 
  
-
+Si el atacante malintencionado logra crear un envío de formulario que intenta modificar params[:moviegoer][:uid] o params[:moviegoer][:provider] mediante la inclusión de campos ocultos como params[moviegoer][uid] y similares, podría potencialmente comprometer la seguridad de la aplicación, podría llevar a realizar cambios no autorizados en la información del usuario autenticado, lo cual resulta en el robo de identidad o en la alteración inapropiada de los datos del usuario.
  
 
 
