@@ -259,3 +259,15 @@ y revisiones.
 ![47](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/565fb598-b144-4631-a031-b112e8f01cf7)
 
 Volviendo a la figura siguiente, vemos asociaciones directas entre Moviegoers y Reviews, así como entre Movies y Reviews.
+
+
+¿Qué indica el siguiente código SQL ?
+
+```
+SELECT movies .*
+    FROM movies JOIN reviews ON movies.id = reviews.movie_id
+    JOIN moviegoers ON moviegoers.id = reviews.moviegoer_id
+    WHERE moviegoers.id = 1;
+```
+
+La consulta selecciona y devuelve todas las columnas de la tabla movies para aquellas películas que tienen revisiones asociadas realizadas por un moviegoer específico con un id igual a 1. En esta consulta el campo moviegoer_id de la tabla reviews sirve como puente de enlace entre las tablas movies y la tabla moviegoer para poder realizar esta consulta.
