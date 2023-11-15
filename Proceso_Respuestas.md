@@ -241,6 +241,7 @@ SELECT reviews.*
 ``` 
 La consulta SQL selecciona todas las columnas de la tabla "reviews" que están asociadas a la película con un id igual a 41 en la tabla "movies".
 
+Despeus configuracion de nuestra aplicacion ejecutamos `rails console`,observamos que estamos trabajando con asociaciones entre modelos (Movie, Moviegoer, y Review).
 
 
 ![45](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/26f29d4f-5f1d-4656-8388-c0df4f4d8092)
@@ -249,6 +250,9 @@ La consulta SQL selecciona todas las columnas de la tabla "reviews" que están a
 
 
 ![46](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/f3c69d63-66a1-4d1f-88de-4bd3a6928a0e)
+
+Este código demuestra el uso de asociaciones y relaciones entre modelos en Rails para representar la relación entre películas, espectadores (usuarios) 
+y revisiones.
 
 
 ## Asociaciones indirectas
