@@ -127,7 +127,14 @@ Ejecutamos bin/rails server y podemos apreciar qie se agrego un nuevo registro e
 Star Wars 	PG 	1977-05-27 00:00:00 UTC 	More about Star Wars
 
 ```
- Al continuar con la realizacion  de la actividad tenemos las siguiente instruccion `rails generate model Moviegoer name:string provider:string uid:string`, sin embargo hay un conflicto(debido al nombre 'Moviegoer' que ya se utiliza en nuestra aplicación) con el archivo  db/migrate/20231114214700_create_moviegoers.rb realizada anteriormente, por ello realice el comando `rails generate model Moviegoer name:string provider:string uid:string --skip-collision-check --force`, con lo cual eliminamos el archivo de migración anterior, es decir 20231113195135_create_moviegoers.rb, creamos un nuevo archivo de migración db/migrate/20231114214754_create_moviegoers.rb y sobrescribimos el archivo del modelo Moviegoer. Para evitar futuros errores o conflictos, elimine la base de datos  y la cree nuevamente.
+
+## SSO y autenticación a través de terceros
+
+Una manera de ser más DRY y productivo es evitar implementar funcionalidad que se puede reutilizar a partir de otros servicios. Un ejemplo muy actual de esto es la autenticación.
+
+Afortunadamente, añadir autenticación en las aplicaciones Rails a través de terceros es algo directo. Por supuesto, antes de que permitamos iniciar sesión a un usuario, ¡necesitamos poder representar usuarios! Así que antes de continuar, vamos a crear un modelo y una migración básicos siguiendo las instrucciones.
+
+ Al continuar con la realizacion  de la actividad tenemos las siguiente instruccion `rails generate model Moviegoer name:string provider:string uid:string`, sin embargo hay un conflicto(debido al nombre 'Moviegoer' que ya se utiliza en nuestra aplicación) con el archivo  `db/migrate/20231114214700_create_moviegoers.rb` realizada anteriormente, por ello realicè el comando `rails generate model Moviegoer name:string provider:string uid:string --skip-collision-check --force`, con lo cual eliminamos el archivo de migración anterior, es decir 20231113195135_create_moviegoers.rb, creamos un nuevo archivo de migración db/migrate/20231114214754_create_moviegoers.rb y sobrescribimos el archivo del modelo Moviegoer. Para evitar futuros errores o conflictos, elimine la base de datos  y la cree nuevamente.
 
 ![28](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/57e85776-c0eb-461b-9e9a-76855d3950d4)
 
@@ -205,3 +212,4 @@ Si el atacante malintencionado logra crear un envío de formulario que intenta m
  
 
 
+## Asociaciones y claves foráneas
