@@ -1,6 +1,7 @@
 # Edit app/models/moviegoer.rb to look like this:
-# app/models/moviegoer.rb
+
 class Moviegoer < ActiveRecord::Base
+  has_many :reviews
   def self.create_with_omniauth(auth)
     Moviegoer.create!(
       :provider => auth["provider"],
@@ -9,4 +10,3 @@ class Moviegoer < ActiveRecord::Base
     )
   end
 end
-
