@@ -256,4 +256,6 @@ y revisiones.
 
 ## Asociaciones indirectas
 
+![47](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/565fb598-b144-4631-a031-b112e8f01cf7)
+
 Volviendo a la figura siguiente, vemos asociaciones directas entre Moviegoers y Reviews, así como entre Movies y Reviews.
