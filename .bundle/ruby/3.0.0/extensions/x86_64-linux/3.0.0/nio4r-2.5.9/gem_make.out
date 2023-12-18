@@ -1,5 +1,5 @@
 current directory: /home/miguelubuntu/Escritorio/CC3S2/Actividad_Rails-Avanzado/Desarrollo-software-2023/Semana7/myrottenpotatoes/.bundle/ruby/3.0.0/gems/nio4r-2.5.9/ext/nio4r
-/home/miguelubuntu/.rvm/rubies/ruby-3.0.2/bin/ruby -I /home/miguelubuntu/.rvm/rubies/ruby-3.0.2/lib/ruby/3.0.0 -r ./siteconf20231113-9469-xqyz4g.rb extconf.rb
+/home/miguelubuntu/.rbenv/versions/3.0.2/bin/ruby -I /home/miguelubuntu/.rbenv/versions/3.0.2/lib/ruby/3.0.0 -r ./siteconf20231218-31427-y3z9gg.rb extconf.rb
 checking for unistd.h... yes
 checking for linux/aio_abi.h... yes
 checking for linux/io_uring.h... yes
@@ -93,4 +93,4 @@ linking shared-object nio4r_ext.so
 
 current directory: /home/miguelubuntu/Escritorio/CC3S2/Actividad_Rails-Avanzado/Desarrollo-software-2023/Semana7/myrottenpotatoes/.bundle/ruby/3.0.0/gems/nio4r-2.5.9/ext/nio4r
 make DESTDIR\= install
-/usr/bin/install -m 0755 nio4r_ext.so ./.gem.20231113-9469-b3op07
+/usr/bin/install -c -m 0755 nio4r_ext.so ./.gem.20231218-31427-kbwjb0

@@ -1,5 +1,5 @@
 current directory: /home/miguelubuntu/Escritorio/CC3S2/Actividad_Rails-Avanzado/Desarrollo-software-2023/Semana7/myrottenpotatoes/.bundle/ruby/3.0.0/gems/msgpack-1.7.2/ext/msgpack
-/home/miguelubuntu/.rvm/rubies/ruby-3.0.2/bin/ruby -I /home/miguelubuntu/.rvm/rubies/ruby-3.0.2/lib/ruby/3.0.0 -r ./siteconf20231113-9469-gkdnjg.rb extconf.rb
+/home/miguelubuntu/.rbenv/versions/3.0.2/bin/ruby -I /home/miguelubuntu/.rbenv/versions/3.0.2/lib/ruby/3.0.0 -r ./siteconf20231218-31427-nm0dof.rb extconf.rb
 checking for rb_enc_interned_str() in ruby.h... yes
 checking for rb_hash_new_capa() in ruby.h... no
 checking for rb_proc_call_with_block() in ruby.h... yes
@@ -35,4 +35,4 @@ linking shared-object msgpack/msgpack.so
 
 current directory: /home/miguelubuntu/Escritorio/CC3S2/Actividad_Rails-Avanzado/Desarrollo-software-2023/Semana7/myrottenpotatoes/.bundle/ruby/3.0.0/gems/msgpack-1.7.2/ext/msgpack
 make DESTDIR\= install
-/usr/bin/install -m 0755 msgpack.so ./.gem.20231113-9469-h9n40h/msgpack
+/usr/bin/install -c -m 0755 msgpack.so ./.gem.20231218-31427-2dv8ji/msgpack
