@@ -3694,3 +3694,4 @@ Processing by MoviesController#index as HTML
 Completed 200 OK in 173ms (Views: 148.8ms | ActiveRecord: 1.1ms | Allocations: 82340)
 
 
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
