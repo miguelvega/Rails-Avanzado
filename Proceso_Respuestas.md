@@ -107,7 +107,7 @@ end
 ```
  Este controlador sigue las convenciones de Rails y proporciona las acciones necesarias para realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en el modelo de películas.
 
-Editamos el archivo movie.rb y comprobamos que el siguiente codigo ilustra cómo utilizar este mecanismo para “canonicalizar” (estandarizar el formato de) ciertos campos del modelo antes de guardar el modelo.
+Editamos el archivo movie.rb y comprobamos que el siguiente codigo ilustra cómo utilizar este mecanismo para “canonicalizar” (estandarizar el formato de ciertos campos del modelo antes de guardar el modelo).
 
 ```
 class Movie < ActiveRecord::Base
@@ -135,15 +135,27 @@ Una manera de ser más DRY y productivo es evitar implementar funcionalidad que 
 
 Afortunadamente, añadir autenticación en las aplicaciones Rails a través de terceros es algo directo. Por supuesto, antes de que permitamos iniciar sesión a un usuario, ¡necesitamos poder representar usuarios! Así que antes de continuar, vamos a crear un modelo y una migración básicos siguiendo las instrucciones.
 
- Al continuar con la realizacion  de la actividad tenemos las siguiente instruccion `rails generate model Moviegoer name:string provider:string uid:string`, sin embargo hay un conflicto(debido al nombre 'Moviegoer' que ya se utiliza en nuestra aplicación) con el archivo  `db/migrate/20231114214700_create_moviegoers.rb` realizada anteriormente, por ello realicè el comando `rails generate model Moviegoer name:string provider:string uid:string --skip-collision-check --force`, con lo cual eliminamos el archivo de migración anterior, es decir `20231113195135_create_moviegoers.rb`, creamos un nuevo archivo de migración `db/migrate/20231114214754_create_moviegoers.rb` y sobrescribimos el archivo del modelo Moviegoer. Para evitar futuros errores o conflictos, elimine la base de datos  y la cree nuevamente.
+ Al continuar con la realizacion  de la actividad tenemos las siguiente instruccion `rails generate model Moviegoer name:string provider:string uid:string`, sin embargo hay un conflicto(debido al nombre 'Moviegoer' que ya se utiliza en nuestra aplicación) con el archivo  `db/migrate/20231114214700_create_moviegoers.rb` realizada anteriormente, por ello realicè el comando `rails generate model Moviegoer name:string provider:string uid:string --skip-collision-check --force`, con lo cual el comando remueve el archivo de migración anterior, es decir `20231113195135_create_moviegoers.rb`, crea un nuevo archivo de migración `db/migrate/20231114214754_create_moviegoers.rb` y sobrescribe el archivo del modelo Moviegoer.
+
+ ![25](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/471e7210-7ba0-487c-a6cd-a871ec877174)
+
+ 
+ 
+ Para evitar futuros errores o conflictos, eliminamos la base de datos y la creamos nuevamente.
 
 ![28](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/57e85776-c0eb-461b-9e9a-76855d3950d4)
 
-Editamos el archivo schema.rb donde se almacena la estructura actual de la base de datos para que se encuentra con la version `2023_10_03_234846`, es decir, previo a la clonacion del repositoio, luego ejecutamos el comando `rails db:migrate` para crear la tabla moviegoeres e incorporarla al archivo y darle la version al schema de esta ultima migracion como se puede apreciar en su marca de tiempo dada en la siguiente imagen.
+Editamos el archivo schema.rb donde se almacena la estructura actual de la base de datos para que se encuentra con la version `2023_10_03_234846`, es decir, previo a la clonacion del repositoio.
+
+![29](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/c2b2947f-cdef-49e8-b223-2e44ee796a51)
+
+
+Luego, ejecutamos el comando `rails db:migrate` para crear la tabla moviegoeres e incorporarla al archivo y darle la version al schema de esta ultima migracion como se puede apreciar en su marca de tiempo dada en la siguiente imagen.
 
 
  ![32](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/d1b51a99-3469-4dc3-a73c-7d39fe963ecb)
 
+ 
 Sin embargo, la base de datos actual esta vacia debido a que no hemos incorporado las semillas dadas en el archivo seeds.rb.
 
 ![31](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/01f8ef61-7af2-4782-8473-a382da8cb60a)
