@@ -271,6 +271,15 @@ y revisiones.
 
 ![47](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/565fb598-b144-4631-a031-b112e8f01cf7)
 
+### Moviegoer (1) --- (0..*) Review:
+- Un Moviegoer tiene la posibilidad de tener ninguna o varias Review.
+- Una Review debe pertenecer a un Moviegoer (es decir, tiene una relación obligatoria con un Moviegoer), pero un Moviegoer puede no tener ninguna Review (relación opcional).
+
+### Review (0..*) --- (1) Movie:
+- Un Review debe pertenecer a una Movie (es decir, tiene una relación obligatoria con una Movie), pero un Movie puede no tener ninguna Review (relación opcional).
+- Una Movie tiene la posibilidad de estar relacionada con ninguna o varias Review.
+
+
 Volviendo a la figura siguiente, vemos asociaciones directas entre Moviegoers y Reviews, así como entre Movies y Reviews.
 
 
