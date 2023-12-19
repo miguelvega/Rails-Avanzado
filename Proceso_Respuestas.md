@@ -62,6 +62,7 @@ Ejecutamos el comando rails console y comprobamos los resultados creando una nue
 
 ![19](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/45d3b1b9-63f4-4d13-9a4d-3b3cc3fe1e6f)
 
+Entonces, como tenemos un registro no valido, si queremos guardar este registro en la base de datos con m.save no se va a poder. Debido a que las validaciones nos ayuda a prevenir la inserción de datos incorrectos o no válidos en la base de datos. Ademas, si queremos comprobar esto podemos salir de de la consola de la consola de rails con exit y ejecutamos `sqlite3 db/development.sqlite3`, realizamos la consulta `Select * from movies;`  con lo cual podemos ver todas las peliculas presentes en la tabla movies de la base de datos y se puede apreciar que no hay ningun registro nuevo añadido. 
 
 Explica el código siguiente :
 
