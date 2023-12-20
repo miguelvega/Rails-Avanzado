@@ -256,20 +256,50 @@ La consulta SQL selecciona todas las columnas de la tabla "reviews" que están a
 
 Despues de ealizar la configuracion para trabajar con asociaciones entre modelos (Movie, Moviegoer, y Review) en nuestra aplicacion ejecutamos `rails console`
 
-![45](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/26f29d4f-5f1d-4656-8388-c0df4f4d8092)
+![37](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/77a41847-5756-44fa-b575-30bce0161488)
 
 
+![38](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/8324453d-66a0-4beb-8b05-061b42cbfd4d)
 
 
-![46](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/f3c69d63-66a1-4d1f-88de-4bd3a6928a0e)
+![39](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/92624f0c-0b3e-48d8-b3e2-90c1d33a3513)
+
+
+![40](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/fb55926f-ba1e-4cba-8724-aad1e4b565cf)
 
 Este código demuestra el uso de asociaciones y relaciones entre modelos en Rails para representar la relación entre películas, espectadores (usuarios) 
 y revisiones.
 
 
+
+```
+# it would be nice if we could do this:
+chucky = Movie.where(title: 'Chucky', rating: 'G', release_date:'27-05-1990').first_or_create
+miguel = Moviegoer.find_by(name: 'Miguel', provider: 'twiter', uid: '1') || Moviegoer.create(name: 'Miguel', provider: 'twiter', uid: '1')
+aldo = Moviegoer.find_by(name: 'Aldo', provider: 'twiter', uid: '2') || Moviegoer.create(name: 'Aldo', provider: 'twiter', uid: '2')
+# Miguel likes Chucky, Aldo less so
+miguel_review = Review.new(potatoes: 4, movie: chucky, moviegoer: miguel)
+aldo_review = Review.new(potatoes: 2, movie: chucky, moviegoer: aldo)
+# a movie has many reviews:
+chucky.reviews = [miguel_review, aldo_review]
+# a moviegoer has many reviews:
+miguel.reviews << miguel_review
+aldo.reviews << aldo_review
+# can we find out who wrote each review?
+chucky.reviews.map { |r| r.moviegoer.name } # => ['miguel','aldo']
+```
+
+
+Ejecutamos el comando `sqlite3 db/development.sqlite3`  y mostramos los registros y relaciones presentes que existen en las tablas de nuestra base de datos
+
+![42](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/d3f37365-3567-4987-91d1-ec37b7beca8e)
+
+
 ## Asociaciones indirectas
 
-![47](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/565fb598-b144-4631-a031-b112e8f01cf7)
+Volviendo a la figura siguiente, vemos asociaciones directas entre Moviegoers y Reviews, así como entre Movies y Reviews.
+
+![41](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/9e9243ae-8ced-4dcc-bc26-29ea69ee5620)
 
 ### Moviegoer (1) --- (0..*) Review:
 - Un Moviegoer tiene la posibilidad de tener ninguna o varias Review.
@@ -279,8 +309,9 @@ y revisiones.
 - Un Review debe pertenecer a una Movie (es decir, tiene una relación obligatoria con una Movie), pero un Movie puede no tener ninguna Review (relación opcional).
 - Una Movie tiene la posibilidad de estar relacionada con ninguna o varias Review.
 
+Ejecutamos el comando `sqlite3 db/development.sqlite3`  y mostramos los registros y relaciones presentes que existen en las tablas de nuestra base de datos
 
-Volviendo a la figura siguiente, vemos asociaciones directas entre Moviegoers y Reviews, así como entre Movies y Reviews.
+![42](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/d3f37365-3567-4987-91d1-ec37b7beca8e)
 
 
 ¿Qué indica el siguiente código SQL ?
@@ -294,21 +325,3 @@ SELECT movies .*
 
 La consulta selecciona y devuelve todas las columnas de la tabla movies para aquellas películas que tienen revisiones asociadas realizadas por un moviegoer específico con un id igual a 1. En esta consulta el campo moviegoer_id de la tabla reviews sirve como puente de enlace entre las tablas movies y la tabla moviegoer para poder realizar esta consulta. Con lo cual si hay dos tablas que no se conectan pero deseas hacer una consultas que involucren campos de dichas tablas, entonces una solucion seria usar una tabla intermediaria de tal modo que tenga campos que se relacionen con dichas tablas. 
 
-
-Se ha  añadido `has_many :reviews` a la clase `Movie`.  El método `has_many` utiliza la metaprogramación para definir el nuevo método de `instancia reviews=` que usamos en el código siguiente.     
-
-```
-# it would be nice if we could do this:
-inception = Movie.where(:title => 'Inception')
-alice,bob = Moviegoer.find(alice_id, bob_id)
-# alice likes Inception, bob less so
-alice_review = Review.new(:potatoes => 5)
-bob_review   = Review.new(:potatoes => 3)
-# a movie has many reviews:
-inception.reviews = [alice_review, bob_review]
-# a moviegoer has many reviews:
-alice.reviews << alice_review
-bob.reviews << bob_review
-# can we find out who wrote each review?
-inception.reviews.map { |r| r.moviegoer.name } # => ['alice','bob']
-```
