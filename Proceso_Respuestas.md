@@ -62,7 +62,6 @@ Ejecutamos el comando rails console y comprobamos los resultados creando una nue
 
 ![19](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/45d3b1b9-63f4-4d13-9a4d-3b3cc3fe1e6f)
 
-Entonces, como tenemos un registro no valido, si queremos guardar este registro en la base de datos con m.save no se va a poder. Debido a que las validaciones nos ayuda a prevenir la inserción de datos incorrectos o no válidos en la base de datos. Ademas, si queremos comprobar esto podemos salir de de la consola de la consola de rails con exit y ejecutamos `sqlite3 db/development.sqlite3`, realizamos la consulta `Select * from movies;`  con lo cual podemos ver todas las peliculas presentes en la tabla movies de la base de datos y se puede apreciar que no hay ningun registro nuevo añadido. 
 
 Explica el código siguiente :
 
@@ -107,7 +106,7 @@ end
 ```
  Este controlador sigue las convenciones de Rails y proporciona las acciones necesarias para realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en el modelo de películas.
 
-Editamos el archivo movie.rb y comprobamos que el siguiente codigo ilustra cómo utilizar este mecanismo para “canonicalizar” (estandarizar el formato de ciertos campos del modelo antes de guardar el modelo).
+Editamos el archivo movie.rb y comprobamos que el siguiente codigo ilustra cómo utilizar este mecanismo para “canonicalizar” (estandarizar el formato de) ciertos campos del modelo antes de guardar el modelo.
 
 ```
 class Movie < ActiveRecord::Base
@@ -135,27 +134,15 @@ Una manera de ser más DRY y productivo es evitar implementar funcionalidad que 
 
 Afortunadamente, añadir autenticación en las aplicaciones Rails a través de terceros es algo directo. Por supuesto, antes de que permitamos iniciar sesión a un usuario, ¡necesitamos poder representar usuarios! Así que antes de continuar, vamos a crear un modelo y una migración básicos siguiendo las instrucciones.
 
- Al continuar con la realizacion  de la actividad tenemos las siguiente instruccion `rails generate model Moviegoer name:string provider:string uid:string`, sin embargo hay un conflicto(debido al nombre 'Moviegoer' que ya se utiliza en nuestra aplicación) con el archivo  `db/migrate/20231114214700_create_moviegoers.rb` realizada anteriormente, por ello realicè el comando `rails generate model Moviegoer name:string provider:string uid:string --skip-collision-check --force`, con lo cual el comando remueve el archivo de migración anterior, es decir `20231113195135_create_moviegoers.rb`, crea un nuevo archivo de migración `db/migrate/20231114214754_create_moviegoers.rb` y sobrescribe el archivo del modelo Moviegoer.
-
- ![25](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/471e7210-7ba0-487c-a6cd-a871ec877174)
-
- 
- 
- Para evitar futuros errores o conflictos, eliminamos la base de datos y la creamos nuevamente.
+ Al continuar con la realizacion  de la actividad tenemos las siguiente instruccion `rails generate model Moviegoer name:string provider:string uid:string`, sin embargo hay un conflicto(debido al nombre 'Moviegoer' que ya se utiliza en nuestra aplicación) con el archivo  `db/migrate/20231114214700_create_moviegoers.rb` realizada anteriormente, por ello realicè el comando `rails generate model Moviegoer name:string provider:string uid:string --skip-collision-check --force`, con lo cual eliminamos el archivo de migración anterior, es decir `20231113195135_create_moviegoers.rb`, creamos un nuevo archivo de migración `db/migrate/20231114214754_create_moviegoers.rb` y sobrescribimos el archivo del modelo Moviegoer. Para evitar futuros errores o conflictos, elimine la base de datos  y la cree nuevamente.
 
 ![28](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/57e85776-c0eb-461b-9e9a-76855d3950d4)
 
-Editamos el archivo schema.rb donde se almacena la estructura actual de la base de datos para que se encuentra con la version `2023_10_03_234846`, es decir, previo a la clonacion del repositoio.
-
-![29](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/c2b2947f-cdef-49e8-b223-2e44ee796a51)
-
-
-Luego, ejecutamos el comando `rails db:migrate` para crear la tabla moviegoeres e incorporarla al archivo y darle la version al schema de esta ultima migracion como se puede apreciar en su marca de tiempo dada en la siguiente imagen.
+Editamos el archivo schema.rb donde se almacena la estructura actual de la base de datos para que se encuentra con la version `2023_10_03_234846`, es decir, previo a la clonacion del repositoio, luego ejecutamos el comando `rails db:migrate` para crear la tabla moviegoeres e incorporarla al archivo y darle la version al schema de esta ultima migracion como se puede apreciar en su marca de tiempo dada en la siguiente imagen.
 
 
  ![32](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/d1b51a99-3469-4dc3-a73c-7d39fe963ecb)
 
- 
 Sin embargo, la base de datos actual esta vacia debido a que no hemos incorporado las semillas dadas en el archivo seeds.rb.
 
 ![31](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/01f8ef61-7af2-4782-8473-a382da8cb60a)
@@ -256,62 +243,22 @@ La consulta SQL selecciona todas las columnas de la tabla "reviews" que están a
 
 Despues de ealizar la configuracion para trabajar con asociaciones entre modelos (Movie, Moviegoer, y Review) en nuestra aplicacion ejecutamos `rails console`
 
-![37](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/77a41847-5756-44fa-b575-30bce0161488)
+![45](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/26f29d4f-5f1d-4656-8388-c0df4f4d8092)
 
 
-![38](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/8324453d-66a0-4beb-8b05-061b42cbfd4d)
 
 
-![39](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/92624f0c-0b3e-48d8-b3e2-90c1d33a3513)
-
-
-![40](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/fb55926f-ba1e-4cba-8724-aad1e4b565cf)
+![46](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/f3c69d63-66a1-4d1f-88de-4bd3a6928a0e)
 
 Este código demuestra el uso de asociaciones y relaciones entre modelos en Rails para representar la relación entre películas, espectadores (usuarios) 
 y revisiones.
 
 
-
-```
-# it would be nice if we could do this:
-chucky = Movie.where(title: 'Chucky', rating: 'G', release_date:'27-05-1990').first_or_create
-miguel = Moviegoer.find_by(name: 'Miguel', provider: 'twiter', uid: '1') || Moviegoer.create(name: 'Miguel', provider: 'twiter', uid: '1')
-aldo = Moviegoer.find_by(name: 'Aldo', provider: 'twiter', uid: '2') || Moviegoer.create(name: 'Aldo', provider: 'twiter', uid: '2')
-# Miguel likes Chucky, Aldo less so
-miguel_review = Review.new(potatoes: 4, movie: chucky, moviegoer: miguel)
-aldo_review = Review.new(potatoes: 2, movie: chucky, moviegoer: aldo)
-# a movie has many reviews:
-chucky.reviews = [miguel_review, aldo_review]
-# a moviegoer has many reviews:
-miguel.reviews << miguel_review
-aldo.reviews << aldo_review
-# can we find out who wrote each review?
-chucky.reviews.map { |r| r.moviegoer.name } # => ['miguel','aldo']
-```
-
-
-Ejecutamos el comando `sqlite3 db/development.sqlite3`  y mostramos los registros y relaciones presentes que existen en las tablas de nuestra base de datos
-
-![42](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/d3f37365-3567-4987-91d1-ec37b7beca8e)
-
-
 ## Asociaciones indirectas
 
+![47](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/565fb598-b144-4631-a031-b112e8f01cf7)
+
 Volviendo a la figura siguiente, vemos asociaciones directas entre Moviegoers y Reviews, así como entre Movies y Reviews.
-
-![41](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/9e9243ae-8ced-4dcc-bc26-29ea69ee5620)
-
-### Moviegoer (1) --- (0..*) Review:
-- Un Moviegoer tiene la posibilidad de tener ninguna o varias Review.
-- Una Review debe pertenecer a un Moviegoer (es decir, tiene una relación obligatoria con un Moviegoer), pero un Moviegoer puede no tener ninguna Review (relación opcional).
-
-### Review (0..*) --- (1) Movie:
-- Un Review debe pertenecer a una Movie (es decir, tiene una relación obligatoria con una Movie), pero un Movie puede no tener ninguna Review (relación opcional).
-- Una Movie tiene la posibilidad de estar relacionada con ninguna o varias Review.
-
-Ejecutamos el comando `sqlite3 db/development.sqlite3`  y mostramos los registros y relaciones presentes que existen en las tablas de nuestra base de datos
-
-![42](https://github.com/miguelvega/Rails-Avanzado/assets/124398378/d3f37365-3567-4987-91d1-ec37b7beca8e)
 
 
 ¿Qué indica el siguiente código SQL ?
@@ -325,3 +272,21 @@ SELECT movies .*
 
 La consulta selecciona y devuelve todas las columnas de la tabla movies para aquellas películas que tienen revisiones asociadas realizadas por un moviegoer específico con un id igual a 1. En esta consulta el campo moviegoer_id de la tabla reviews sirve como puente de enlace entre las tablas movies y la tabla moviegoer para poder realizar esta consulta. Con lo cual si hay dos tablas que no se conectan pero deseas hacer una consultas que involucren campos de dichas tablas, entonces una solucion seria usar una tabla intermediaria de tal modo que tenga campos que se relacionen con dichas tablas. 
 
+
+Se ha  añadido `has_many :reviews` a la clase `Movie`.  El método `has_many` utiliza la metaprogramación para definir el nuevo método de `instancia reviews=` que usamos en el código siguiente.     
+
+```
+# it would be nice if we could do this:
+inception = Movie.where(:title => 'Inception')
+alice,bob = Moviegoer.find(alice_id, bob_id)
+# alice likes Inception, bob less so
+alice_review = Review.new(:potatoes => 5)
+bob_review   = Review.new(:potatoes => 3)
+# a movie has many reviews:
+inception.reviews = [alice_review, bob_review]
+# a moviegoer has many reviews:
+alice.reviews << alice_review
+bob.reviews << bob_review
+# can we find out who wrote each review?
+inception.reviews.map { |r| r.moviegoer.name } # => ['alice','bob']
+```
